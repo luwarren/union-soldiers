@@ -14,12 +14,12 @@ def retry_requests(
             filename_ids = np.array([int(filename.split(".")[0]) for filename in filenames])
 
             result = ids[~np.isin(ids, filename_ids)]
-            print("failed results: " + str(result.shape[0]))
+            print("Failed results: " + str(result.shape[0]))
 
             if result.shape[0] == 0:
                 break
 
-            print("re-scraping failed results")
+            print("Re-scraping failed results")
             ids = result
 
         open(failed_ids_path, "w").close()

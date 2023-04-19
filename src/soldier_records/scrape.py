@@ -1,3 +1,4 @@
+import os
 from src.soldier_records.ids import scrape_solider_ids
 from src.soldier_records.records import get_and_save_soldier_records as solder_records
 from src.soldier_records.compile_csv import compile_soldier_csv

@@ -17,7 +17,7 @@ def get_military_entities(req_headers : Dict[str, str]) -> List[Dict[str, Any]]:
         "facetRequests": [
             {
             "type": "military.service",
-            "maxCount": 10000
+            "maxCount": 100
             }
         ],
         "filters": [
@@ -157,14 +157,14 @@ def send_docsearch_req(req_headers : Dict[str, str], payload : Dict)-> List[int]
         ids = list(map(lambda x: int(x["doc"]["id"]["id"]), resp_json["hits"]))    
         return ids
 
-    print("failed to get ids for payload:", payload)
-    print("reason:", exc_reason)
+    print("Failed to get ids for payload:", payload)
+    print("Reason:", exc_reason)
     sys.exit(1)
 
 def scrape_solider_ids() -> np.ndarray:
     # if ids are already cached, use them instead of scraping
     if os.path.exists("data/soldier_ids.npy"):
-        print("using cached ids")
+        print("Using cached ids")
         return np.load("data/soldier_ids.npy", allow_pickle=True)
 
     req_headers = auth.REQ_HEADERS.copy()
