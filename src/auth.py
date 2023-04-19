@@ -3,6 +3,9 @@ import os
 from selenium.webdriver.support.wait import WebDriverWait
 from seleniumwire import webdriver
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+
+import src.login as login
 
 REQ_HEADERS = {}
 
@@ -16,6 +19,18 @@ def get_headers_dict():
     driver = webdriver.Firefox()
     driver.get("https://www.fold3.com/login")
 
+    # Escape out of popup
+    driver.find_element(By.XPATH, '/html/body/div[2]/div[2]/div[1]/div[1]/div/div/div[2]/div[6]/button').click()
+
+    # Find email and password input fields to enter values
+    email_input = driver.find_element(By.XPATH, '//*[@id="username"]')
+    email_input.send_keys(login.EMAIL)
+    password_input = driver.find_element(By.XPATH, '//*[@id="password"]')
+    password_input.send_keys(login.PASSWORD)
+
+    # Enter information
+    driver.find_element(By.XPATH, '//*[@id="signin-btn"]').click()
+    
     # wait to be redirected to the home page
     WebDriverWait(driver, 60).until(   
         EC.title_contains("Historical"),
