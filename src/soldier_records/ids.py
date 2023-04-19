@@ -24,7 +24,7 @@ def get_military_entities(req_headers : Dict[str, str]) -> List[Dict[str, Any]]:
             {
             "type": "military.conflict",
             "values": [
-                "Civil War (Confederate)"
+                "Civil War (Union)"
             ]
             },
             {
@@ -36,7 +36,7 @@ def get_military_entities(req_headers : Dict[str, str]) -> List[Dict[str, Any]]:
             {
             "type": "general.title.content.collection",
             "values": [
-                "us-civil-war-confederate"
+                "us-civil-war-union"
             ]
             }
         ],
@@ -106,7 +106,7 @@ def generate_doc_search_payloads(entities : List[Dict]) -> List[Dict]:
                 'filters': [
                     {
                         'type': 'military.conflict',
-                        'values': ['Civil War (Confederate)']
+                        'values': ['Civil War (Union)']
                     },
                     {
                         'type': 'general.title.content.sub-type',
@@ -114,7 +114,7 @@ def generate_doc_search_payloads(entities : List[Dict]) -> List[Dict]:
                     },
                     {
                         'type': 'general.title.content.collection',
-                        'values': ['us-civil-war-confederate']
+                        'values': ['us-civil-war-union']
                     },
                     {
                         'type': 'general.title.id', 
@@ -179,7 +179,7 @@ def scrape_solider_ids() -> np.ndarray:
     with ThreadPoolExecutor(max_workers=config.MAX_WORKERS) as executor:
         ids = list(tqdm(executor.map(send_docsearch_req, repeat(req_headers), payloads), 
             total=len(payloads),
-            desc= "scraping all confederate soldier ids"
+            desc= "Scraping all union soldier ids"
         ))
 
     # flatten results

@@ -42,5 +42,5 @@ def get_and_save_regiment_records(ids: np.ndarray):
     with ThreadPoolExecutor(max_workers=config.MAX_WORKERS) as executor:
         list(tqdm(executor.map(send_regiment_record_req, ids),
             total=len(ids),
-            desc= "scraping all confederate regiment records"
+            desc= "Scraping all union regiment records"
         ))
