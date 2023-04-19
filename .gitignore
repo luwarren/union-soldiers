@@ -1,8 +1,7 @@
 # project-specific
 experimentation
 data
-chromedriver.exe
-chromedriver
+login.py
 
 # IDE related
 .vscode
