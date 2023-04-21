@@ -17,7 +17,7 @@ def get_military_entities(req_headers : Dict[str, str]) -> List[Dict[str, Any]]:
         "facetRequests": [
             {
             "type": "military.service",
-            "maxCount": 10000
+            "maxCount": 100
             }
         ],
         "filters": [
@@ -161,7 +161,7 @@ def send_docsearch_req(req_headers : Dict[str, str], payload : Dict)-> List[int]
     print("Reason:", exc_reason)
     sys.exit(1)
 
-def scrape_solider_ids() -> np.ndarray:
+def scrape_soldier_ids() -> np.ndarray:
     # if ids are already cached, use them instead of scraping
     if os.path.exists("data/soldier_ids.npy"):
         print("Using cached ids")
@@ -192,7 +192,24 @@ def scrape_solider_ids() -> np.ndarray:
     sorted_flattened_ids = sorted_flattened_ids[sorted_flattened_ids != 655288166]
     sorted_flattened_ids = sorted_flattened_ids[sorted_flattened_ids != 654162824]
 
-    # cache ids for future use
-    np.save("data/soldier_ids.npy", sorted_flattened_ids)
+    # filename for the file you want to save
+    output_filename = "soldier_ids.npy"
+
+    homedir = os.path.expanduser("~")
+
+    # construct the directory string
+    pathset = os.path.join(homedir, "\Documents\Research Assistant\confederate-soldiers\data")
+
+    # check the directory does not exist
+    if not(os.path.exists(pathset)):
+
+        # create the directory you want to save to
+        os.mkdir(pathset)
+
+    # write the file in the new directory
+    np.save(os.path.join(pathset, output_filename), sorted_flattened_ids)
 
     return sorted_flattened_ids
+
+
+

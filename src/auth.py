@@ -16,11 +16,14 @@ def clear_terminal():
         os.system('clear')
 
 def get_headers_dict():
-    driver = webdriver.Firefox()
+    driver = webdriver.Chrome()
     driver.get("https://www.fold3.com/login")
 
-    # Escape out of popup
-    driver.find_element(By.XPATH, '/html/body/div[2]/div[2]/div[1]/div[1]/div/div/div[2]/div[6]/button').click()
+    # Escape out of popup - if on US VPN, it is unnecessary
+    try:
+        driver.find_element(By.XPATH, '/html/body/div[2]/div[2]/div[1]/div[1]/div/div/div[2]/div[6]/button').click()
+    except Exception:
+        print("No element")
 
     # Find email and password input fields to enter values
     email_input = driver.find_element(By.XPATH, '//*[@id="username"]')
