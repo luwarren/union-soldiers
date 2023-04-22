@@ -23,7 +23,7 @@ def get_headers_dict():
     try:
         driver.find_element(By.XPATH, '/html/body/div[2]/div[2]/div[1]/div[1]/div/div/div[2]/div[6]/button').click()
     except Exception:
-        print("No element")
+        pass
 
     # Find email and password input fields to enter values
     email_input = driver.find_element(By.XPATH, '//*[@id="username"]')
