@@ -17,7 +17,7 @@ def get_military_entities(req_headers : Dict[str, str]) -> List[Dict[str, Any]]:
         "facetRequests": [
             {
             "type": "military.service",
-            "maxCount": 10
+            "maxCount": 2
             }
         ],
         "filters": [
@@ -192,7 +192,7 @@ def scrape_soldier_ids() -> np.ndarray:
     sorted_flattened_ids = sorted_flattened_ids[sorted_flattened_ids != 655288166]
     sorted_flattened_ids = sorted_flattened_ids[sorted_flattened_ids != 654162824]
 
-    # use the absolute path to save the numpy array
+    # use the path to save the numpy array
     np.save('data/soldier_ids.npy', sorted_flattened_ids)
         
     return sorted_flattened_ids

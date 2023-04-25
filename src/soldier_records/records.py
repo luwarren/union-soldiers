@@ -23,8 +23,6 @@ def send_soldier_record_req(id : int):
             raise Exception("no match")
         data = json.loads(match.group(1))
 
-        # print(data.keys())
-
         # check if memorialContent is a key and reject if not
         if "content" not in data.keys():
             raise Exception("no content")
