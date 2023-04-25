@@ -22,5 +22,5 @@ If you would like to contribute to this project, please contact the project mana
 
 ## Acknowledgements
 
-- Joseph Jeong, for creating the initial codebase.
+- [Joseph Jeong](https://github.com/josephjeong), for creating the initial codebase.
 - The [Fold3.com](http://fold3.com/) team, for providing access to the data.
