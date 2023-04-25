@@ -16,7 +16,7 @@ def process_soldier_file(filename: str) -> pd.DataFrame:
     counter = defaultdict(int) # to append event types
     name = ""
     
-    for datum in data["memorialContent"]["elements"]:
+    for datum in data["content"]["elements"]:
         element = datum["element"]
         # if not an event, not relevant to us
         if "event" not in element.keys():

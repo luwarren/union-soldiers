@@ -17,7 +17,7 @@ def get_military_entities(req_headers : Dict[str, str]) -> List[Dict[str, Any]]:
         "facetRequests": [
             {
             "type": "military.service",
-            "maxCount": 50000
+            "maxCount": 10
             }
         ],
         "filters": [
@@ -135,7 +135,7 @@ def generate_doc_search_payloads(entities : List[Dict]) -> List[Dict]:
     return payloads
 
 def send_docsearch_req(req_headers : Dict[str, str], payload : Dict)-> List[int]:
-    NUM_RETRIES = 3
+    NUM_RETRIES = 1
     exc_reason = None
     
     for _ in range(NUM_RETRIES):

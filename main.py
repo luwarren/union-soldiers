@@ -6,7 +6,7 @@ if __name__ == "__main__":
     # get initial auth headers for use in subsequent operations
     get_headers_dict()
 
-    # scrape solider reocrds
+    # scrape soldier reocrds
     soldiers.scrape()
 
     # scrape regiment records

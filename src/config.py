@@ -1,2 +1,1 @@
 MAX_WORKERS = 36
-DRIVER_FILENAME = "geckodriver"

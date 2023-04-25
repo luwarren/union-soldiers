@@ -39,6 +39,7 @@ def get_headers_dict():
         EC.title_contains("Historical"),
         "Authentication Did Not Succeed Before Timeout"
     )
+
     reqs = driver.requests
     driver.quit()
  
