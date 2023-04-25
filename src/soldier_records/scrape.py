@@ -1,4 +1,6 @@
 import os
+from src.auth import clear_terminal
+
 from src.soldier_records.ids import scrape_soldier_ids
 from src.soldier_records.records import get_and_save_soldier_records as soldier_records
 from src.soldier_records.compile_csv import compile_soldier_csv
@@ -23,4 +25,4 @@ def scrape():
     # compile all scraped records
     print("Compiling scraped records...")
     compile_soldier_csv()
-    print("Finished compiling scraped records")
+    print("Finished compiling scraped records\n")

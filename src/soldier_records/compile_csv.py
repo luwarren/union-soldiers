@@ -83,8 +83,9 @@ def process_all_soldier_records() -> pd.DataFrame:
 def compile_soldier_csv():
     df = process_all_soldier_records()
 
-    print("compiling csv")
-    df.to_csv("data/soldier_records.csv", index=False)
+    print("Compiling csv")
+    df.to_csv("data/csv_out/soldier_records.csv", index=False)
 
     df.reset_index(inplace=True, drop=True)
     print(df)
+    

@@ -35,7 +35,6 @@ def process_regiment_file(filename : str) -> pd.DataFrame:
         end_date = documents["endDate"]
     except:
         end_date = None
-    # endPlace = documents["endPlace"]
 
     # get commander list
     history = documents["history"]
@@ -74,8 +73,8 @@ def process_all_regiment_files() -> pd.DataFrame:
 def compile_regiment_csv():
     df = process_all_regiment_files()
 
-    print("compiling csv")
-    df.to_csv("data/regiment_records.csv", index=False)
+    print("Compiling csv")
+    df.to_csv("data/csv_out/regiment_records.csv", index=False)
 
     df.reset_index(inplace=True, drop=True)
     print(df)

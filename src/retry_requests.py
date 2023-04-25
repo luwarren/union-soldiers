@@ -26,3 +26,4 @@ def retry_requests(
 
         # run actual scraping operation
         get_and_save_records(ids)
+        

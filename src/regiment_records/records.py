@@ -11,8 +11,6 @@ from tqdm import tqdm
 import src.auth as auth
 import src.config as config
 
-from pprint import pprint
-
 def send_regiment_record_req(id : int):
     req_headers = auth.REQ_HEADERS.copy()
 
@@ -21,11 +19,11 @@ def send_regiment_record_req(id : int):
 
         match = re.search(r"\"F3_COMPONENT_DATA\":\s*({(?:.*)})", resp.text)
         if match is None:
-            raise Exception("no match")
+            raise Exception("No match")
         data = json.loads(match.group(1))
 
         if "regimentContent" not in data.keys():
-            raise Exception("no regimentContent")
+            raise Exception("No content")
 
         with open(f"data/regiment_records/{id}.pkl", "wb") as f:
             pickle.dump(data, f)
@@ -35,10 +33,9 @@ def send_regiment_record_req(id : int):
         with open("data/failed_regiment_ids.txt", "a") as f:
             f.write(f"{id}\n")
 
-
 def get_and_save_regiment_records(ids: np.ndarray):
-    ids = ids[:1]
-
+    # ids = ids[:1]
+    # print(f"Get and Save Regiment Records:\n{ids}")
     with ThreadPoolExecutor(max_workers=config.MAX_WORKERS) as executor:
         list(tqdm(executor.map(send_regiment_record_req, ids),
             total=len(ids),

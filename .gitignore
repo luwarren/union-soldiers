@@ -1,6 +1,7 @@
 # project-specific
 experimentation
 data
+data_template
 login.py
 
 # IDE related
