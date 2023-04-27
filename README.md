@@ -10,7 +10,7 @@ To use this code, you will need a premium account for [Fold3.com](http://fold3.c
 
 ## Output Requirements
 
-Before running the code, ensure that a 'data' directory has been created in the main project directory. Within the data directory, create three subdirectories: `csv_out`, `regiment_records`, and `soldier_records`. The scraped data will be saved to these directories in CSV and pickle formats.
+Before running the code, ensure that a `data` directory has been created in the main project directory. Within the data directory, create three subdirectories: `csv_out`, `regiment_records`, and `soldier_records`. The scraped data will be saved to these directories in CSV and pickle formats.
 
 ## Usage
 

@@ -8,19 +8,19 @@ from src.soldier_records.compile_csv import compile_soldier_csv
 from src.retry_requests import retry_requests
 
 def scrape():
-    print("Scraping soldier ids...")
-    soldier_ids = scrape_soldier_ids()
-    print(f"Scraped {len(soldier_ids)} soldier ids")
+    # print("Scraping soldier ids...")
+    # soldier_ids = scrape_soldier_ids()
+    # print(f"Scraped {len(soldier_ids)} soldier ids")
 
-    # scrape soldier records
-    print("Scraping soldier records...")
-    retry_requests(
-        records_dir = "data/soldier_records",
-        failed_ids_path = "data/failed_soldier_ids.txt",
-        ids = soldier_ids,
-        get_and_save_records = soldier_records,
-    )
-    print("Finished scraping soldier records")
+    # # scrape soldier records
+    # print("Scraping soldier records...")
+    # retry_requests(
+    #     records_dir = "data/soldier_records",
+    #     failed_ids_path = "data/failed_soldier_ids.txt",
+    #     ids = soldier_ids,
+    #     get_and_save_records = soldier_records,
+    # )
+    # print("Finished scraping soldier records")
 
     # compile all scraped records
     print("Compiling scraped records...")

@@ -1,11 +1,11 @@
 import os
 import pickle
-
 import pandas as pd
-
-from concurrent.futures import ProcessPoolExecutor
+from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
 from tqdm import tqdm
 from collections import defaultdict
+
+CHUNK_SIZE = 250000
 
 def process_soldier_file(filename: str) -> pd.DataFrame:
     with open(f"data/soldier_records/{filename}", "rb") as f:
@@ -69,23 +69,37 @@ def process_soldier_file(filename: str) -> pd.DataFrame:
 
     return df
 
-# open and unpickle all files in "data/soldier_records" directory
-def process_all_soldier_records() -> pd.DataFrame:
-    filenames = os.listdir("data/soldier_records")
+# open and unpickle a chunk of files in "data/soldier_records" directory and write to a separate CSV file
+def process_chunk(chunk_filenames: list, chunk_num: int) -> str:
     with ProcessPoolExecutor() as executor:
-        records = pd.concat(tqdm(
-            executor.map(process_soldier_file, filenames), 
-            total=len(filenames), 
-            desc="unpickling records"
-        ))
-    return records
+        dfs = list(tqdm(executor.map(process_soldier_file, chunk_filenames), 
+            total=len(chunk_filenames),
+            desc=f"Processing chunk {chunk_num}",
+            position=chunk_num))
+    chunk_df = pd.concat(dfs)
+    
+    with ThreadPoolExecutor() as executor:
+        future = executor.submit(chunk_df.to_csv, f"data/csv_out/soldier_records_chunk{chunk_num}.csv", index=False)
+        future.result()
+        
+    return f"data/csv_out/soldier_records_chunk{chunk_num}.csv"
 
 def compile_soldier_csv():
-    df = process_all_soldier_records()
-
-    print("Compiling csv")
+    filenames = os.listdir("data/soldier_records")
+    chunked_filenames = [filenames[i : i + CHUNK_SIZE] for i in range(0, len(filenames), CHUNK_SIZE)]
+    
+    # process each chunk in parallel and collect the CSV file paths
+    with ProcessPoolExecutor() as executor:
+        csv_files = list(tqdm(
+            executor.map(process_chunk, chunked_filenames, range(len(chunked_filenames))), 
+            total=len(chunked_filenames), 
+            desc="Compiling chunks"
+        ))
+    
+    # combine all CSV files into one
+    print("Compiling final CSV")
+    df = pd.concat([pd.read_csv(csv_file) for csv_file in csv_files])
     df.to_csv("data/csv_out/soldier_records.csv", index=False)
 
     df.reset_index(inplace=True, drop=True)
     print(df)
-    
