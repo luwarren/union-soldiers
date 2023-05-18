@@ -71,30 +71,26 @@ def process_soldier_file(filename: str) -> pd.DataFrame:
 
 # open and unpickle a chunk of files in "data/soldier_records" directory and write to a separate CSV file
 def process_chunk(chunk_filenames: list, chunk_num: int) -> str:
-    with ProcessPoolExecutor() as executor:
-        dfs = list(tqdm(executor.map(process_soldier_file, chunk_filenames), 
-            total=len(chunk_filenames),
-            desc=f"Processing chunk {chunk_num}",
-            position=chunk_num))
-    chunk_df = pd.concat(dfs)
+    dfs = []
+    for filename in tqdm(chunk_filenames, desc=f"Processing chunk {chunk_num}", position=chunk_num):
+        df = process_soldier_file(filename)
+        dfs.append(df)
     
-    with ThreadPoolExecutor() as executor:
-        future = executor.submit(chunk_df.to_csv, f"data/csv_out/soldier_records_chunk{chunk_num}.csv", index=False)
-        future.result()
-        
+    chunk_df = pd.concat(dfs)
+    chunk_df.to_csv(f"data/csv_out/soldier_records_chunk{chunk_num}.csv", index=False)
+    
     return f"data/csv_out/soldier_records_chunk{chunk_num}.csv"
+
 
 def compile_soldier_csv():
     filenames = os.listdir("data/soldier_records")
     chunked_filenames = [filenames[i : i + CHUNK_SIZE] for i in range(0, len(filenames), CHUNK_SIZE)]
     
-    # process each chunk in parallel and collect the CSV file paths
-    with ProcessPoolExecutor() as executor:
-        csv_files = list(tqdm(
-            executor.map(process_chunk, chunked_filenames, range(len(chunked_filenames))), 
-            total=len(chunked_filenames), 
-            desc="Compiling chunks"
-        ))
+    # process each chunk sequentially and collect the CSV file paths
+    csv_files = []
+    for i, chunk_filenames in enumerate(chunked_filenames):
+        csv_file = process_chunk(chunk_filenames, i)
+        csv_files.append(csv_file)
     
     # combine all CSV files into one
     print("Compiling final CSV")

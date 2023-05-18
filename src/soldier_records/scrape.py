@@ -23,6 +23,6 @@ def scrape():
     # print("Finished scraping soldier records")
 
     # compile all scraped records
-    print("Compiling scraped records...")
+    print("Compiling scraped soldier records...")
     compile_soldier_csv()
-    print("Finished compiling scraped records\n")
+    print("Finished compiling scraped soldier records\n")

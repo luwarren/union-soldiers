@@ -17,7 +17,7 @@ def scrape():
     print("Finished scraping regiment records")
 
     # compile all scraped records
-    print("Compiling scraped records...")
+    print("Compiling scraped regiment records...")
     compile_regiment_csv()
-    print("Finished compiling scraped records")
+    print("Finished compiling scraped regiment records")
     
